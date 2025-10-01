@@ -6,7 +6,7 @@ dac_bits = [16,20,21,25,26,17,27,22]
 
 gpio.setup(dac_bits, gpio.OUT)
 
-dynamic_range = 3.14
+dynamic_range = 3.13
 
 def voltage_to_number (voltage):
     if not (0.0<=voltage<=dynamic_range):
