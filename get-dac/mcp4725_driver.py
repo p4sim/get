@@ -1,3 +1,5 @@
+#unfinished
+
 import RPi.GPIO as gpio
 import time
 import smbus
@@ -36,7 +38,7 @@ class MCP4725:
             print(f"Напряжение выходит за динамический диапазон ЦАП (0.00 - {self.dynamic_range:.2f} В)")
             print ("Устанавливаем 0.0 В")
             return 0
-        return set_number((self, voltage/self.dynamic_range * 4095))
+        return self.set_number((voltage/self.dynamic_range * 4095))
 
 
 
