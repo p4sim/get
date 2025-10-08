@@ -7,14 +7,18 @@ gpio.output(leds, 0)
 
 up = 9
 down = 10
+enter = 13
 gpio.setup (up, gpio.IN)
 gpio.setup (down, gpio.IN)
+gpio.setup (enter, gpio.IN)
 num = 0
 
 def dec2bin(value):
     return [int(element)for element in bin(value)[2:].zfill(8)]
 
 sleep_time = 0.2
+sum = 0
+i = 0
 
 while True:
 
@@ -33,11 +37,19 @@ while True:
     if gpio.input(up) and gpio.input(down):
         num = 255
         print (num,dec2bin(num))
-        time.sleep(sleep_time * 3) 
+        time.sleep(sleep_time)
 
     if num > 255:
         num = 0
 
- 
-
     gpio.output (leds, dec2bin(num))
+
+    if gpio.input (enter):
+        sum+=num
+        i+=1
+        num = 0
+    
+    if i==2:
+        gpio.output (leds, dec2bin(sum))
+
+   
