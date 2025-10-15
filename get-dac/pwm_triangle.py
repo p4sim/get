@@ -13,7 +13,7 @@ if __name__ == "__main__":
         while True:
             try:
                 sg.wait_for_sampling_period(sampling_frequency)
-                voltage = (sg.get_sin_wave_amplitude(signal_frequency, time.time())* amplitude)
+                voltage = (sg.get_triangle_wave_amplitude(signal_frequency, time.time())* amplitude)
                 dac.set_voltage(voltage)
 
             except ValueError:

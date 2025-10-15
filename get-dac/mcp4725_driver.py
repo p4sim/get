@@ -1,5 +1,3 @@
-#unfinished
-
 import RPi.GPIO as gpio
 import time
 import smbus
@@ -33,7 +31,7 @@ class MCP4725:
             print (f"Число: {number}, отправленные по I2C данные: [0x{(self.address << 1):02X}, 0x{first_byte:02X}, 0x{second_byte:02X}]\n")
 
     def set_voltage(self,voltage):
-        self.set_number(int(v/5.17 * (4095)))
+        return self.set_number(int(float(voltage)/self.dynamic_range * 4095))
     
     def deinit(self):
         self.bus.close()
@@ -42,13 +40,12 @@ class MCP4725:
 
 if __name__ == "__main__":
     try:
-        dac = MCP4725(5, 0x61, True)
+        dac = MCP4725(5.20, 0x61, True)
 
         while True:
             try:
-                controller = MCP4725(4096)
-                a = float(input())
-                controller.set_voltage(float(a))
+                a = input()
+                dac.set_voltage(a)
             except ValueError:
                 print("error")
 
