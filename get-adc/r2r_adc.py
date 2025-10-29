@@ -38,6 +38,24 @@ class R2R_ADC:
         voltage = self.sequential_counting_adc() /255 * self.dynamic_range
         return voltage
 
+    def successive_approximation_adc(self):
+        oldest_bit = 7
+        res = 0
+        while (oldest_bit >= 0):
+            res += 2**oldest_bit
+            self.number_to_dac (res)
+            time.sleep(self.compare_time)
+            if (gpio.input(self.comp_gpio) != 0):
+                res -= 2**oldest_bit
+                oldest_bit -= 1
+            else:
+                oldest_bit -=1
+        return res
+
+    def get_sar_voltage (self):
+        voltage = self.successive_approximation_adc() / 255 * self.dynamic_range
+        return voltage
+
 
 if __name__ == "__main__":
     try:
@@ -45,7 +63,8 @@ if __name__ == "__main__":
 
         while True:
             try:
-                voltage = adc.get_sc_voltage ()
+                #voltage = adc.get_sc_voltage ()
+                voltage = adc.get_sar_voltage ()
                 print ("Напряжение:", voltage, 'В')
 
             except ValueError:

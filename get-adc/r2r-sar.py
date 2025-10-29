@@ -15,7 +15,7 @@ if __name__ == "__main__":
                 while (time.time() - start < duration):
                     delta = time.time() - start
                     time_values.append (delta)
-                    voltage_values.append (adconv.get_sc_voltage ())
+                    voltage_values.append (adconv.get_sar_voltage ())
                     #print (voltage_values)
                 plot.plot_voltage_vs_time (time_values, voltage_values, 3.3)
                 plot.plot_sampling_period_hist (time_values)
